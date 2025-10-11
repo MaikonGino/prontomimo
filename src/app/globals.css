@@ -1,42 +1,55 @@
+/* Importa a fonte Poppins com os pesos que usaremos no projeto */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap');
+
+/* Define as variáveis CSS com as cores exatas da identidade visual da Pronto Mimo */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    /* Cores da Marca */
+    --verde-salvia: #8A9A95;
+    --azul-noturno: #2B3A67;
+    --branco-gelo: #F7F7F7;
+    --grafite: #2D2D2D;
+
+    /* Cores de Suporte e Alerta */
+    --cinza-niquel: #BCC0C4;
+    --nevoa: #D4DBE7;
+    --vermelho-alerta: #E53E3E;
+
+    /* Fonte da Marca */
+    --font-poppins: 'Poppins', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Define a animação de fade-in para as páginas */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
+/* Reseta estilos padrão e aplica a base moderna */
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--branco-gelo);
+    color: var(--grafite);
+    font-family: var(--font-poppins);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+    color: inherit;
+    text-decoration: none;
 }
