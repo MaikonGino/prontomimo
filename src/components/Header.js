@@ -1,7 +1,11 @@
 "use client";
 
+import React, {useState} from 'react'; // Importamos o useState para o efeito de hover
 import {useCart} from "@/context/CartContext";
 import Link from 'next/link';
+import Image from 'next/image';
+
+// --- ESTILOS DO COMPONENTE ---
 
 const headerContainerStyles = {
     padding: '0 20px',
@@ -9,7 +13,6 @@ const headerContainerStyles = {
     boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
     borderBottom: '1px solid var(--nevoa)',
 };
-
 const headerStyles = {
     maxWidth: '1200px',
     margin: '0 auto',
@@ -18,15 +21,20 @@ const headerStyles = {
     justifyContent: 'space-between',
     alignItems: 'center'
 };
-
-const logoStyles = {
+// NOVO: Estilo para o container que agrupa a imagem e o texto do logo
+const logoContainerStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '15px', // Espaçamento entre a imagem e o texto
+};
+// NOVO: Estilo para o texto "Pronto Mimo"
+const logoTextStyles = {
     fontFamily: 'var(--font-poppins)',
     fontWeight: '800',
     fontSize: '2rem',
     color: 'var(--azul-noturno)',
-    transition: 'color 0.2s ease-in-out',
+    transition: 'color 0.3s ease-in-out',
 };
-
 const cartButtonStyles = {
     background: 'none',
     border: 'none',
@@ -34,13 +42,11 @@ const cartButtonStyles = {
     position: 'relative',
     transition: 'transform 0.2s ease-in-out'
 };
-
 const cartIconStyles = {
     width: '32px',
     height: '32px',
     color: 'var(--grafite)'
 };
-
 const cartCountStyles = {
     position: 'absolute',
     top: '-5px',
@@ -58,8 +64,11 @@ const cartCountStyles = {
     border: '2px solid #fff'
 };
 
+// --- COMPONENTE PRINCIPAL ---
+
 export default function Header() {
     const {openCart, cartItems} = useCart();
+    const [isLogoHovered, setIsLogoHovered] = useState(false);
     const totalItems = cartItems.reduce((count, item) => count + item.quantity, 0);
 
     return (
@@ -68,10 +77,25 @@ export default function Header() {
                 <Link
                     href="/"
                     style={{textDecoration: 'none'}}
-                    onMouseEnter={(e) => e.currentTarget.firstChild.style.color = 'var(--verde-salvia)'}
-                    onMouseLeave={(e) => e.currentTarget.firstChild.style.color = 'var(--azul-noturno)'}
+                    onMouseEnter={() => setIsLogoHovered(true)}
+                    onMouseLeave={() => setIsLogoHovered(false)}
                 >
-                    <div style={logoStyles}>Pronto Mimo</div>
+                    <div style={logoContainerStyles}>
+                        <Image
+                            src="/logo-pronto-mimo.png"
+                            alt="Símbolo da loja Pronto Mimo" // O alt agora descreve o símbolo
+                            width={50} // Ajustado para um formato mais de ícone
+                            height={50}
+                            priority
+                            style={{objectFit: 'contain'}}
+                        />
+                        <span style={{
+                            ...logoTextStyles,
+                            color: isLogoHovered ? 'var(--verde-salvia)' : 'var(--azul-noturno)'
+                        }}>
+              Pronto Mimo
+            </span>
+                    </div>
                 </Link>
                 <button
                     onClick={openCart}

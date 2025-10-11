@@ -1,16 +1,10 @@
 import ProductCard from '@/components/ProductCard';
+import {getAllProducts} from '@/lib/productService'; // Importa a função direta do nosso serviço
 
-async function getProducts() {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-    const res = await fetch(`${apiUrl}/api/products`, {cache: 'no-store'});
-    if (!res.ok) {
-        throw new Error('Falha ao buscar produtos da API');
-    }
-    return res.json();
-}
-
+// A página principal, que é um Server Component e pode ser assíncrona
 export default async function HomePage() {
-    const {data: products} = await getProducts();
+    // Chama a função para buscar os dados diretamente do banco, sem 'fetch'.
+    const products = await getAllProducts();
 
     const heroStyles = {
         backgroundColor: 'var(--verde-salvia)',
@@ -18,27 +12,23 @@ export default async function HomePage() {
         textAlign: 'center',
         padding: '80px 20px',
     };
-
     const heroTitleStyles = {
         fontFamily: 'var(--font-poppins)',
         fontWeight: '800',
         fontSize: '3.5rem',
         marginBottom: '10px'
     };
-
     const heroSubtitleStyles = {
         fontSize: '1.2rem',
         fontWeight: '400',
         maxWidth: '600px',
         margin: '0 auto'
     };
-
     const productsSectionStyles = {
         maxWidth: '1200px',
         margin: '0 auto',
         padding: '60px 20px',
     };
-
     const sectionTitleStyles = {
         fontFamily: 'var(--font-poppins)',
         fontWeight: '700',

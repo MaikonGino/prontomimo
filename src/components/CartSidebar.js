@@ -3,10 +3,8 @@
 import {useCart} from "@/context/CartContext";
 
 const overlayStyles = (isOpen) => ({
-    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999,
-    opacity: isOpen ? 1 : 0, transition: 'opacity 0.4s ease-in-out',
-    pointerEvents: isOpen ? 'auto' : 'none', // Permite cliques apenas quando visível
+    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999,
+    opacity: isOpen ? 1 : 0, transition: 'opacity 0.4s ease-in-out', pointerEvents: isOpen ? 'auto' : 'none',
 });
 const sidebarStyles = (isOpen) => ({
     position: 'fixed',
@@ -118,6 +116,16 @@ export default function CartSidebar() {
         removeFromCart,
         openModal
     } = useCart();
+
+    const handleRemove = (item) => {
+        openModal(
+            'Remover Item',
+            `Tem certeza que deseja remover "${item.name}" do seu carrinho?`,
+            'error', // Isso ativará o tema de alerta/vermelho
+            () => removeFromCart(item._id) // Esta é a ação que será executada ao confirmar
+        );
+    };
+
     const handleCheckout = () => {
         openModal('Em Desenvolvimento', 'A funcionalidade de checkout e integração com o Mercado Pago será o próximo passo!', 'info');
     };
@@ -142,7 +150,7 @@ export default function CartSidebar() {
                                             <div style={quantityControlStyles}>
                                                 <button onClick={() => decreaseQuantity(item._id)}
                                                         style={quantityButtonStyles}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    <svg xmlns="http://www.w.org/2000/svg" fill="none"
                                                          viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
                                                          style={{width: 16, height: 16}}>
                                                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -156,7 +164,7 @@ export default function CartSidebar() {
                                                 }}>{item.quantity}</span>
                                                 <button onClick={() => increaseQuantity(item._id)}
                                                         style={quantityButtonStyles}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    <svg xmlns="http://www.w.3.org/2000/svg" fill="none"
                                                          viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
                                                          style={{width: 16, height: 16}}>
                                                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -170,10 +178,10 @@ export default function CartSidebar() {
                                             }}>R$ {(item.price * item.quantity).toFixed(2)}</span>
                                         </div>
                                     </div>
-                                    <button onClick={() => removeFromCart(item._id)} style={removeButtonStyles}
+                                    <button onClick={() => handleRemove(item)} style={removeButtonStyles}
                                             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--vermelho-alerta)'}
                                             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--cinza-niquel)'}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        <svg xmlns="http://www.w.3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                              strokeWidth={1.5} stroke="currentColor" style={{width: 22, height: 22}}>
                                             <path strokeLinecap="round" strokeLinejoin="round"
                                                   d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.134H8.09a2.09 2.09 0 0 0-2.09 2.134v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
