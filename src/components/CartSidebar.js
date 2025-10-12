@@ -1,110 +1,19 @@
 "use client";
 
 import {useCart} from "@/context/CartContext";
+import {motion, AnimatePresence} from 'framer-motion';
+// O import do 'Image' não é mais necessário aqui
+import './CartSidebar.css';
 
-const overlayStyles = (isOpen) => ({
-    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999,
-    opacity: isOpen ? 1 : 0, transition: 'opacity 0.4s ease-in-out', pointerEvents: isOpen ? 'auto' : 'none',
-});
-const sidebarStyles = (isOpen) => ({
-    position: 'fixed',
-    top: 0,
-    right: isOpen ? '0' : '-100%',
-    width: '100%',
-    maxWidth: '400px',
-    height: '100vh',
-    backgroundColor: '#fff',
-    boxShadow: '-4px 0 20px rgba(0,0,0,0.15)',
-    transition: 'right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-    zIndex: 1000,
-    display: 'flex',
-    flexDirection: 'column'
-});
-const headerStyles = {
-    padding: '20px',
-    borderBottom: '1px solid var(--nevoa)',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-};
-const titleStyles = {
-    fontFamily: 'var(--font-poppins)',
-    fontWeight: '700',
-    color: 'var(--azul-noturno)',
-    fontSize: '1.5rem'
-};
-const closeButtonStyles = {
-    background: 'none',
-    border: 'none',
-    fontSize: '2rem',
-    cursor: 'pointer',
-    color: 'var(--grafite)',
-    lineHeight: 1
-};
-const itemListStyles = {flexGrow: 1, padding: '20px', overflowY: 'auto'};
-const itemStyles = {display: 'flex', gap: '15px', padding: '15px 0', borderBottom: '1px solid var(--nevoa)'};
-const imagePlaceholderStyles = {
-    width: '80px',
-    height: '80px',
-    backgroundColor: 'var(--nevoa)',
-    borderRadius: '8px',
-    flexShrink: 0
-};
-const itemDetailsStyles = {flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'};
-const itemNameStyles = {fontWeight: '500', color: 'var(--grafite)'};
-const itemControlsStyles = {display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px'};
-const quantityControlStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    border: '1px solid var(--nevoa)',
-    borderRadius: '50px',
-    padding: '4px 8px'
-};
-const quantityButtonStyles = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    padding: '5px',
-    display: 'flex',
-    color: 'var(--grafite)'
-};
-const removeButtonStyles = {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    padding: '5px',
-    display: 'flex',
-    color: 'var(--cinza-niquel)',
-    transition: 'color 0.2s'
-};
-const footerStyles = {
-    padding: '20px',
-    borderTop: '1px solid var(--nevoa)',
-    backgroundColor: '#fff',
-    boxShadow: '0 -4px 10px rgba(0,0,0,0.05)'
-};
-const subtotalStyles = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    fontWeight: 'bold',
-    fontSize: '1.2rem',
-    color: 'var(--grafite)'
-};
-const checkoutButtonStyles = {
-    backgroundColor: 'var(--verde-salvia)',
-    color: 'var(--branco-gelo)',
-    border: 'none',
-    borderRadius: '5px',
-    padding: '15px',
-    width: '100%',
-    fontWeight: 'bold',
-    fontSize: '1rem',
-    cursor: 'pointer',
-    marginTop: '15px',
-    transition: 'background-color 0.2s'
+// --- VARIANTES DE ANIMAÇÃO PARA OS ITENS (sem alterações) ---
+const listVariants = {hidden: {opacity: 0}, visible: {opacity: 1, transition: {staggerChildren: 0.1}}};
+const itemVariants = {
+    hidden: {opacity: 0, x: 50},
+    visible: {opacity: 1, x: 0},
+    exit: {opacity: 0, x: -50, transition: {duration: 0.3}}
 };
 
+// --- COMPONENTE PRINCIPAL ---
 export default function CartSidebar() {
     const {
         isCartOpen,
@@ -116,93 +25,106 @@ export default function CartSidebar() {
         removeFromCart,
         openModal
     } = useCart();
-
-    const handleRemove = (item) => {
-        openModal(
-            'Remover Item',
-            `Tem certeza que deseja remover "${item.name}" do seu carrinho?`,
-            'error', // Isso ativará o tema de alerta/vermelho
-            () => removeFromCart(item._id) // Esta é a ação que será executada ao confirmar
-        );
-    };
-
     const handleCheckout = () => {
         openModal('Em Desenvolvimento', 'A funcionalidade de checkout e integração com o Mercado Pago será o próximo passo!', 'info');
+    };
+    const handleRemove = (item) => {
+        openModal('Remover Item', `Tem certeza que deseja remover "${item.name}" do seu carrinho?`, 'error', () => removeFromCart(item._id));
     };
 
     return (
         <>
-            <div style={overlayStyles(isCartOpen)} onClick={closeCart}/>
-            <aside style={sidebarStyles(isCartOpen)}>
-                <header style={headerStyles}>
-                    <h2 style={titleStyles}>Meu Carrinho</h2>
-                    <button onClick={closeCart} style={closeButtonStyles}>&times;</button>
+            <div className={`cart-overlay ${isCartOpen ? 'open' : ''}`} onClick={closeCart}/>
+            <aside className={`cart-sidebar ${isCartOpen ? 'open' : ''}`}>
+                <header className="cart-header">
+                    {/* A CORREÇÃO SOLICITADA ESTÁ AQUI */}
+                    <div className="cart-title-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                             stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.658-.463 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z"/>
+                        </svg>
+                        <h2 className="cart-title">Meu Carrinho</h2>
+                    </div>
+                    {/* FIM DA CORREÇÃO */}
+                    <button onClick={closeCart} className="close-button" aria-label="Fechar carrinho">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5}
+                             stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                 </header>
-                <div style={itemListStyles}>
-                    {cartItems.length === 0 ? (<p>Seu carrinho está vazio.</p>) : (
-                        <ul style={{listStyle: 'none'}}>
-                            {cartItems.map((item) => (
-                                <li key={item._id} style={itemStyles}>
-                                    <div style={imagePlaceholderStyles}/>
-                                    <div style={itemDetailsStyles}>
-                                        <span style={itemNameStyles}>{item.name}</span>
-                                        <div style={itemControlsStyles}>
-                                            <div style={quantityControlStyles}>
-                                                <button onClick={() => decreaseQuantity(item._id)}
-                                                        style={quantityButtonStyles}>
-                                                    <svg xmlns="http://www.w.org/2000/svg" fill="none"
-                                                         viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
-                                                         style={{width: 16, height: 16}}>
-                                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                                              d="M5 12h14"/>
-                                                    </svg>
-                                                </button>
-                                                <span style={{
-                                                    minWidth: '20px',
-                                                    textAlign: 'center',
-                                                    fontWeight: '500'
-                                                }}>{item.quantity}</span>
-                                                <button onClick={() => increaseQuantity(item._id)}
-                                                        style={quantityButtonStyles}>
-                                                    <svg xmlns="http://www.w.3.org/2000/svg" fill="none"
-                                                         viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
-                                                         style={{width: 16, height: 16}}>
-                                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                                              d="M12 4.5v15m7.5-7.5h-15"/>
-                                                    </svg>
-                                                </button>
+                <div className="item-list">
+                    {cartItems.length === 0 ? (
+                        <div className="empty-cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1}
+                                 stroke="currentColor" style={{width: 80, height: 80, marginBottom: '20px'}}>
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.658-.463 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z"/>
+                            </svg>
+                            <h3 style={{fontWeight: '500', color: 'var(--grafite)', fontSize: '1.2rem'}}>Seu carrinho
+                                está vazio</h3>
+                            <p style={{marginTop: '5px'}}>Adicione mimos para começar.</p>
+                        </div>
+                    ) : (
+                        <motion.ul style={{listStyle: 'none'}} variants={listVariants} initial="hidden"
+                                   animate="visible">
+                            <AnimatePresence>
+                                {cartItems.map((item) => (
+                                    <motion.li key={item._id} className="cart-item" variants={itemVariants} exit="exit">
+                                        <div className="item-image"/>
+                                        <div className="item-details">
+                                            <span className="item-name">{item.name}</span>
+                                            <div className="item-controls">
+                                                <div className="quantity-control">
+                                                    <button onClick={() => decreaseQuantity(item._id)}
+                                                            className="quantity-button decrease-button"
+                                                            aria-label="Diminuir quantidade">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
+                                                             style={{width: 16, height: 16}}>
+                                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                                  d="M5 12h14"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span>{item.quantity}</span>
+                                                    <button onClick={() => increaseQuantity(item._id)}
+                                                            className="quantity-button increase-button"
+                                                            aria-label="Aumentar quantidade">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
+                                                             style={{width: 16, height: 16}}>
+                                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                                  d="M12 4.5v15m7.5-7.5h-15"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <span
+                                                    className="item-price">R$ {(item.price * item.quantity).toFixed(2)}</span>
                                             </div>
-                                            <span style={{
-                                                fontWeight: '700',
-                                                fontSize: '1.1rem'
-                                            }}>R$ {(item.price * item.quantity).toFixed(2)}</span>
                                         </div>
-                                    </div>
-                                    <button onClick={() => handleRemove(item)} style={removeButtonStyles}
-                                            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--vermelho-alerta)'}
-                                            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--cinza-niquel)'}>
-                                        <svg xmlns="http://www.w.3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                             strokeWidth={1.5} stroke="currentColor" style={{width: 22, height: 22}}>
-                                            <path strokeLinecap="round" strokeLinejoin="round"
-                                                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.134H8.09a2.09 2.09 0 0 0-2.09 2.134v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
-                                        </svg>
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
+                                        <button onClick={() => handleRemove(item)} className="remove-button"
+                                                aria-label="Remover item do carrinho">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 strokeWidth={1.5} stroke="currentColor"
+                                                 style={{width: 22, height: 22}}>
+                                                <path strokeLinecap="round" strokeLinejoin="round"
+                                                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.134H8.09a2.09 2.09 0 0 0-2.09 2.134v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                            </svg>
+                                        </button>
+                                    </motion.li>
+                                ))}
+                            </AnimatePresence>
+                        </motion.ul>
                     )}
                 </div>
                 {cartItems.length > 0 && (
-                    <footer style={footerStyles}>
-                        <div style={subtotalStyles}>
+                    <footer className="cart-footer">
+                        <div className="subtotal">
                             <span>Subtotal</span>
                             <span>R$ {subtotal.toFixed(2)}</span>
                         </div>
-                        <button onClick={handleCheckout} style={checkoutButtonStyles}
-                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--azul-noturno)'}
-                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--verde-salvia)'}>Finalizar
-                            Compra
-                        </button>
+                        <button onClick={handleCheckout} className="checkout-button">Finalizar Compra</button>
                     </footer>
                 )}
             </aside>

@@ -1,0 +1,26 @@
+.footer {
+    padding: 30px 20px;
+    text-align: center;
+    margin-top: auto; /* Garante que ele fique no final do container flex */
+    background-color: var(--grafite);
+    color: var(--branco);
+    flex-shrink: 0; /* Impede que o footer encolha */
+}
+
+.footer-link {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.gradient-text {
+    /* O gradiente agora usa as cores vibrantes da sua nova paleta */
+    background: linear-gradient(to right, var(--azul-claro), var(--verde-claro), var(--rosa-claro));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: filter 0.3s ease;
+}
+
+.footer-link:hover .gradient-text {
+    filter: brightness(1.2) saturate(1.2); /* Efeito de hover mais intenso */
+}

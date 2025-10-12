@@ -1,0 +1,96 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: var(--branco);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.modal-content.open {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-title {
+    font-family: var(--font-poppins);
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.modal-title.info {
+    color: var(--azul-profundo);
+}
+
+.modal-title.error {
+    color: var(--vermelho-alerta);
+}
+
+.modal-message {
+    font-size: 1.1rem;
+    color: var(--grafite);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-family: var(--font-poppins);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.2s;
+}
+
+.modal-button:hover {
+    opacity: 0.9;
+}
+
+.primary-button.info {
+    background-color: var(--verde-floresta);
+    color: var(--branco);
+}
+
+.primary-button.error {
+    background-color: var(--vermelho-alerta);
+    color: var(--branco);
+}
+
+.secondary-button {
+    background-color: var(--cinza-claro);
+    color: var(--grafite);
+}

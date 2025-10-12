@@ -1,0 +1,117 @@
+/* --- ESTILOS PADRÃO (DESKTOP) --- */
+.header-container {
+    padding: 0 20px;
+    background-color: var(--branco);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--cinza-claro);
+    position: sticky; /* Mantém o header no topo ao rolar */
+    top: 0;
+    z-index: 900;
+}
+
+.header {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-text {
+    font-family: var(--font-poppins);
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--azul-profundo);
+    transition: color 0.3s ease-in-out;
+}
+
+.logo-container:hover .logo-text {
+    color: var(--verde-floresta);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s ease-in-out;
+}
+
+.action-button:hover {
+    transform: scale(1.1);
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: var(--laranja-terroso);
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border: 2px solid var(--branco);
+}
+
+
+/* --- MEDIA QUERY PARA MOBILE (Telas com 768px ou menos) --- */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 15px; /* Reduz o espaçamento lateral */
+    }
+
+    .header {
+        height: 70px; /* Header um pouco mais compacto */
+    }
+
+    .logo-container {
+        gap: 10px; /* Reduz o espaço entre o ícone e o texto */
+    }
+
+    /* AQUI ESTÁ A MUDANÇA QUE VOCÊ PEDIU: */
+    .logo-text {
+        font-size: 1.5rem; /* O nome "Pronto Mimo" fica menor */
+    }
+
+    /* Ajusta o tamanho da imagem do logo para ficar proporcional */
+    .logo-container img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .header-actions {
+        gap: 15px; /* Reduz o espaço entre os ícones da direita */
+    }
+
+    /* Opcional: Reduz levemente os ícones de ação no mobile */
+    .action-button svg, .action-button img {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .cart-count {
+        width: 20px;
+        height: 20px;
+        font-size: 0.75rem;
+        top: -6px;
+        right: -8px;
+    }
+}

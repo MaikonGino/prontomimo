@@ -1,0 +1,101 @@
+.details-main {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.back-button {
+    margin-bottom: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--grafite);
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: var(--cinza-claro);
+    opacity: 0.8;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    opacity: 1;
+    background-color: var(--azul-claro);
+    color: var(--azul-profundo);
+    transform: translateX(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.details-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+    align-items: center;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 450px;
+    background-color: var(--cinza-claro);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--grafite);
+    opacity: 0.5;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-family: var(--font-poppins);
+    font-weight: 800;
+    color: var(--azul-profundo);
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: var(--verde-floresta);
+    margin: 10px 0;
+}
+
+.description {
+    margin-bottom: 30px;
+    line-height: 1.7;
+    color: var(--grafite);
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* A CORREÇÃO SOLICITADA ESTÁ AQUI */
+.add-to-cart-button {
+    background-color: var(--laranja-terroso);
+    color: var(--branco);
+    border: none;
+    border-radius: 8px;
+    padding: 18px 30px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    /* Novas propriedades para alinhar o ícone e o texto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* Espaçamento entre o ícone e o texto */
+}
+
+.add-to-cart-button:hover {
+    background-color: var(--verde-floresta);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}

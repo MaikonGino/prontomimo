@@ -3,88 +3,42 @@
 import React from 'react';
 import Link from 'next/link';
 import {useCart} from '@/context/CartContext';
-
-// --- ESTILOS DO COMPONENTE ---
-const mainStyles = {maxWidth: '1000px', margin: '40px auto', padding: '20px', animation: 'fadeIn 0.5s ease-in-out'};
-const backLinkStyles = {
-    marginBottom: '30px',
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '8px',
-    color: 'var(--grafite)',
-    fontWeight: '500'
-};
-const containerStyles = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '40px',
-    alignItems: 'center'
-};
-const imagePlaceholderStyles = {
-    width: '100%',
-    height: '450px',
-    backgroundColor: 'var(--nevoa)',
-    borderRadius: '12px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'var(--cinza-niquel)'
-};
-const infoStyles = {display: 'flex', flexDirection: 'column'};
-const titleStyles = {
-    fontFamily: 'var(--font-poppins)',
-    fontWeight: '800',
-    color: 'var(--azul-noturno)',
-    fontSize: '3rem',
-    lineHeight: 1.2,
-    marginBottom: '10px'
-};
-const priceStyles = {fontWeight: '700', fontSize: '2.5rem', color: 'var(--verde-salvia)', margin: '10px 0'};
-const descriptionStyles = {marginBottom: '30px', lineHeight: 1.7, color: 'var(--grafite)'};
-const buttonStyles = {
-    backgroundColor: 'var(--verde-salvia)', color: 'var(--branco-gelo)', border: 'none', borderRadius: '8px',
-    padding: '15px 30px', fontWeight: '700', cursor: 'pointer', fontSize: '1rem',
-    transition: 'all 0.3s ease', textTransform: 'uppercase'
-};
+import './ProductDetails.css';
 
 export default function ProductDetailsClient({product}) {
     const {addToCart} = useCart();
 
     return (
-        <main style={mainStyles}>
-            <Link href="/" style={backLinkStyles}>
+        <div className="details-main">
+            <Link href="/" className="back-button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2}
                      stroke="currentColor" style={{width: 20, height: 20}}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
                 </svg>
                 Voltar para todos os produtos
             </Link>
-            <div style={containerStyles}>
-                <div style={imagePlaceholderStyles}>
+            <div className="details-container">
+                <div className="image-placeholder">
                     <span>Imagem do Produto</span>
                 </div>
-                <div style={infoStyles}>
-                    <h1 style={titleStyles}>{product.name}</h1>
-                    <p style={priceStyles}>R$ {product.price.toFixed(2)}</p>
-                    <p style={descriptionStyles}>{product.description}</p>
+                <div className="info">
+                    <h1 className="title">{product.name}</h1>
+                    <p className="price">R$ {product.price.toFixed(2)}</p>
+                    <p className="description">{product.description}</p>
                     <button
-                        style={buttonStyles}
+                        className="add-to-cart-button"
                         onClick={() => addToCart(product)}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = 'var(--azul-noturno)';
-                            e.currentTarget.style.transform = 'translateY(-2px)';
-                            e.currentTarget.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = 'var(--verde-salvia)';
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = 'none';
-                        }}
                     >
-                        Adicionar ao Carrinho
+                        {/* A CORREÇÃO SOLICITADA ESTÁ AQUI: Ícone SVG adicionado */}
+                        <svg style={{width: 22, height: 22}} xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.658-.463 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z"/>
+                        </svg>
+                        <span>Adicionar ao Carrinho</span>
                     </button>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }
