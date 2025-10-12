@@ -1,12 +1,12 @@
 "use client";
 
-import {motion, AnimatePresence} from 'framer-motion';
-import {usePathname} from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 const variants = {
-    initial: {x: '100%', opacity: 0},
-    animate: {x: 0, opacity: 1},
-    exit: {x: '-100%', opacity: 0},
+    initial: { opacity: 0, x: '100%' },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: '-100%' },
 };
 
 const transition = {
@@ -15,7 +15,7 @@ const transition = {
     damping: 30,
 };
 
-const PageTransition = ({children}) => {
+const PageTransition = ({ children }) => {
     const pathname = usePathname();
 
     return (
@@ -27,15 +27,14 @@ const PageTransition = ({children}) => {
                 animate="animate"
                 exit="exit"
                 transition={transition}
-                // A CORREÇÃO ESTÁ AQUI: Removemos 'height: 100%'.
-                // Agora o 'div' da animação terá a altura do conteúdo da página, permitindo o scroll.
-                // Adicionamos 'display: flex' e 'flexDirection' para garantir que o conteúdo se alinhe corretamente.
+                // A CORREÇÃO DO SCROLL ESTÁ AQUI:
+                // 'position: absolute' e 'height: 100%' garantem que a animação ocupe todo o "palco".
+                // 'overflowY: auto' torna ESTE elemento a área de rolagem vertical.
                 style={{
                     position: 'absolute',
                     width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flex: 1, // Faz com que o conteúdo ocupe o espaço
+                    height: '100%',
+                    overflowY: 'auto',
                 }}
             >
                 {children}

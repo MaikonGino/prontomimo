@@ -38,7 +38,7 @@
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 25px; /* Aumenta o espaço entre os ícones */
+    gap: 25px;
 }
 
 .action-button {
@@ -72,7 +72,6 @@
     border: 2px solid var(--branco);
 }
 
-/* NOVO: Estilo para o botão de Sair */
 .logout-button {
     font-family: var(--font-poppins);
     font-weight: 700;
@@ -86,4 +85,43 @@
 
 .logout-button:hover {
     opacity: 0.7;
+}
+
+/* --- A CORREÇÃO PARA O HEADER RESPONSIVO ESTÁ AQUI --- */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 15px;
+    }
+
+    .header {
+        height: 70px;
+    }
+
+    .logo-container {
+        gap: 10px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+    .logo-container img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .header-actions {
+        gap: 15px;
+    }
+
+    .action-button svg, .action-button img {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .logout-button {
+        display: none;
+    }
+
+    /* Opcional: Esconde o texto "Sair" para economizar espaço */
 }

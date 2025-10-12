@@ -2,7 +2,7 @@
 
 import {useCart} from "@/context/CartContext";
 import {motion, AnimatePresence} from 'framer-motion';
-// O import do 'Image' não é mais necessário aqui
+import Image from 'next/image';
 import './CartSidebar.css';
 
 // --- VARIANTES DE ANIMAÇÃO PARA OS ITENS (sem alterações) ---
@@ -37,7 +37,6 @@ export default function CartSidebar() {
             <div className={`cart-overlay ${isCartOpen ? 'open' : ''}`} onClick={closeCart}/>
             <aside className={`cart-sidebar ${isCartOpen ? 'open' : ''}`}>
                 <header className="cart-header">
-                    {/* A CORREÇÃO SOLICITADA ESTÁ AQUI */}
                     <div className="cart-title-container">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor">
@@ -46,7 +45,6 @@ export default function CartSidebar() {
                         </svg>
                         <h2 className="cart-title">Meu Carrinho</h2>
                     </div>
-                    {/* FIM DA CORREÇÃO */}
                     <button onClick={closeCart} className="close-button" aria-label="Fechar carrinho">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5}
                              stroke="currentColor">
@@ -71,8 +69,13 @@ export default function CartSidebar() {
                                    animate="visible">
                             <AnimatePresence>
                                 {cartItems.map((item) => (
+                                    // A CORREÇÃO ESTÁ AQUI: O CONTEÚDO DO 'li' FOI RESTAURADO
                                     <motion.li key={item._id} className="cart-item" variants={itemVariants} exit="exit">
-                                        <div className="item-image"/>
+                                        <div className="item-image">
+                                            {item.mainImage &&
+                                                <Image src={item.mainImage} alt={item.name} width={90} height={90}
+                                                       style={{objectFit: 'cover'}}/>}
+                                        </div>
                                         <div className="item-details">
                                             <span className="item-name">{item.name}</span>
                                             <div className="item-controls">
@@ -122,7 +125,8 @@ export default function CartSidebar() {
                     <footer className="cart-footer">
                         <div className="subtotal">
                             <span>Subtotal</span>
-                            <span>R$ {subtotal.toFixed(2)}</span>
+                            {/* A correção de robustez que causou o problema, agora no lugar certo */}
+                            <span>R$ {(subtotal || 0).toFixed(2)}</span>
                         </div>
                         <button onClick={handleCheckout} className="checkout-button">Finalizar Compra</button>
                     </footer>

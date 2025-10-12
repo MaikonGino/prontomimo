@@ -50,44 +50,33 @@ export function CartProvider({children}) {
         setCartItems(prevItems => prevItems.filter(item => item._id !== productId));
     };
 
-    // --- A LÓGICA CORRIGIDA ESTÁ AQUI ---
     const decreaseQuantity = (productId) => {
-        // Primeiro, encontramos o item no carrinho para checar sua quantidade atual
         const itemToDecrease = cartItems.find(item => item._id === productId);
-
-        // Se o item não for encontrado por algum motivo, não fazemos nada.
         if (!itemToDecrease) return;
-
-        // CASO 1: A quantidade é maior que 1.
-        // A ação é segura, apenas diminuímos a quantidade.
         if (itemToDecrease.quantity > 1) {
             setCartItems(prevItems =>
                 prevItems.map(item =>
-                    item._id === productId
-                        ? {...item, quantity: item.quantity - 1}
-                        // Clonamos o item para garantir a re-renderização correta
-                        : {...item}
+                    item._id === productId ? {...item, quantity: item.quantity - 1} : {...item}
                 )
             );
-        }
-            // CASO 2: A quantidade é exatamente 1.
-        // Esta é uma ação "destrutiva". Em vez de remover, abrimos o modal de confirmação.
-        else {
+        } else {
             openModal(
                 'Remover Item',
                 `Tem certeza que deseja remover "${itemToDecrease.name}" do seu carrinho?`,
-                'error', // Usa o tema de alerta (vermelho/laranja)
-                () => removeFromCart(productId) // A ação a ser executada se o usuário confirmar
+                'error',
+                () => removeFromCart(productId)
             );
         }
     };
 
+    // 1. Calcula o subtotal a partir dos itens do carrinho.
     const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const value = {
-        cartItems, addToCart, isCartOpen, openCart, closeCart, subtotal,
+        cartItems, addToCart, isCartOpen, openCart, closeCart,
         increaseQuantity, decreaseQuantity, removeFromCart,
         isModalOpen, modalContent, openModal, closeModal,
+        subtotal, // 2. Garante que o subtotal está sendo compartilhado com o resto da aplicação.
     };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

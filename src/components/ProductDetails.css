@@ -1,5 +1,5 @@
 .details-main {
-    max-width: 1100px; /* Aumenta a largura máxima */
+    max-width: 1100px;
     margin: 60px auto;
     padding: 20px;
 }
@@ -27,28 +27,43 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* LAYOUT REFEITO PARA EXCELÊNCIA VISUAL */
 .details-container {
     display: grid;
-    grid-template-columns: 1.2fr 1fr; /* Coluna da imagem é maior */
-    gap: 60px; /* Aumenta o espaçamento */
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
     align-items: flex-start;
 }
 
+/* A CORREÇÃO PARA O BOTÃO DE COMPRA ESTÁ AQUI */
+.info {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Garante que o container ocupe a altura disponível */
+}
+
+.description {
+    line-height: 1.7;
+    color: var(--grafite);
+    font-size: 1.1rem;
+    opacity: 0.8;
+    flex-grow: 1; /* Faz a descrição ocupar o espaço, empurrando o botão para baixo */
+    overflow-y: auto; /* Adiciona scroll se a descrição for muito longa */
+    max-height: 300px; /* Limita a altura máxima da descrição */
+    padding-right: 10px; /* Espaço para a barra de rolagem */
+    margin-bottom: 30px;
+}
+
+/* FIM DA CORREÇÃO */
+
 .image-gallery {
     width: 100%;
-    aspect-ratio: 1 / 1; /* Garante que a imagem seja sempre quadrada */
+    aspect-ratio: 1 / 1;
     background-color: var(--cinza-claro);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Garante que a imagem respeite as bordas */
-}
-
-.info {
-    display: flex;
-    flex-direction: column;
+    overflow: hidden;
 }
 
 .title {
@@ -67,7 +82,6 @@
     margin: 10px 0;
 }
 
-/* NOVO: Estilos para a informação de estoque na página de produto */
 .stock-display {
     font-size: 1rem;
     font-weight: 500;
@@ -78,21 +92,13 @@
 }
 
 .stock-display.low {
-    background-color: rgba(217, 118, 91, 0.1); /* Fundo laranja suave */
+    background-color: rgba(217, 118, 91, 0.1);
     color: var(--laranja-terroso);
 }
 
 .stock-display.in-stock {
-    background-color: rgba(0, 102, 60, 0.1); /* Fundo verde suave */
+    background-color: rgba(0, 102, 60, 0.1);
     color: var(--verde-floresta);
-}
-
-.description {
-    margin-bottom: 30px;
-    line-height: 1.7;
-    color: var(--grafite);
-    font-size: 1.1rem;
-    opacity: 0.8;
 }
 
 .add-to-cart-button {
@@ -123,4 +129,19 @@
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+}
+
+/* Media query para empilhar o layout no mobile */
+@media (max-width: 768px) {
+    .details-container {
+        grid-template-columns: 1fr;
+    }
+
+    .title {
+        font-size: 2.2rem;
+    }
+
+    .price {
+        font-size: 2rem;
+    }
 }

@@ -9,6 +9,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
+    flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas pequenas */
+    gap: 20px;
 }
 
 .dashboard-title {
@@ -36,11 +38,9 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.products-table-container {
-    background-color: var(--branco);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    overflow: hidden;
+/* --- ESTILOS DA TABELA PARA DESKTOP --- */
+.products-table-wrapper {
+    display: none; /* Escondido por padrão */
 }
 
 .products-table {
@@ -64,9 +64,6 @@
     vertical-align: middle;
 }
 
-/* Garante alinhamento vertical */
-
-/* NOVO: Estilo para a imagem de prévia na tabela */
 .product-preview-image {
     width: 60px;
     height: 60px;
@@ -88,6 +85,7 @@
 .action-links a, .action-links button {
     font-weight: 700;
     transition: transform 0.2s;
+    font-size: 1rem;
 }
 
 .action-links a:hover, .action-links button:hover {
@@ -103,5 +101,68 @@
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
+}
+
+
+/* --- NOVOS ESTILOS PARA CARDS NO MOBILE --- */
+.mobile-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-card-mobile {
+    background-color: var(--branco);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.card-mobile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.card-mobile-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-mobile-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--azul-profundo);
+}
+
+.card-mobile-details {
+    font-size: 0.9rem;
+    color: var(--grafite);
+    opacity: 0.8;
+}
+
+.card-mobile-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+
+/* --- MEDIA QUERY PARA TROCAR O LAYOUT --- */
+/* Em telas maiores que 768px, mostra a tabela e esconde os cards */
+@media (min-width: 768px) {
+    .products-table-wrapper {
+        display: block;
+    }
+
+    .mobile-card-list {
+        display: none;
+    }
 }
