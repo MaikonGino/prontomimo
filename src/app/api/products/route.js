@@ -1,51 +1,27 @@
 import {NextResponse} from 'next/server';
-import {getProductById} from '@/lib/productService';
 import dbConnect from '@/lib/dbConnect';
 import Product from '@/models/Product';
+import {revalidatePath} from 'next/cache'; // 1. Importa o comando de revalidação
 
-// Função GET (Ler um produto) - Já existente
-export async function GET(request, {params}) {
-    const {id} = params;
+export async function GET(request) {
     try {
-        const product = await getProductById(id);
-        if (!product) {
-            return NextResponse.json({success: false, error: "Produto não encontrado"}, {status: 404});
-        }
-        return NextResponse.json({success: true, data: product});
+        await dbConnect();
+        const products = await Product.find({});
+        return NextResponse.json({success: true, data: products});
     } catch (error) {
-        return NextResponse.json({success: false, error: error.message}, {status: 500});
+        return NextResponse.json({success: false, error: "Falha ao buscar produtos"}, {status: 500});
     }
 }
 
-// NOVA FUNÇÃO PUT (Atualizar um produto)
-export async function PUT(request, {params}) {
-    const {id} = params;
+export async function POST(request) {
     try {
         const body = await request.json();
         await dbConnect();
-        const updatedProduct = await Product.findByIdAndUpdate(id, body, {
-            new: true,
-            runValidators: true,
-        });
-        if (!updatedProduct) {
-            return NextResponse.json({success: false, error: "Produto não encontrado para atualizar"}, {status: 404});
-        }
-        return NextResponse.json({success: true, data: updatedProduct});
-    } catch (error) {
-        return NextResponse.json({success: false, error: error.message}, {status: 400});
-    }
-}
+        const newProduct = await Product.create(body);
 
-// NOVA FUNÇÃO DELETE (Deletar um produto)
-export async function DELETE(request, {params}) {
-    const {id} = params;
-    try {
-        await dbConnect();
-        const deletedProduct = await Product.findByIdAndDelete(id);
-        if (!deletedProduct) {
-            return NextResponse.json({success: false, error: "Produto não encontrado para deletar"}, {status: 404});
-        }
-        return NextResponse.json({success: true, data: {}}); // Retorna sucesso com dados vazios
+        revalidatePath('/'); // 2. Diz ao Next.js para regenerar a home page
+
+        return NextResponse.json({success: true, data: newProduct}, {status: 201});
     } catch (error) {
         return NextResponse.json({success: false, error: error.message}, {status: 400});
     }

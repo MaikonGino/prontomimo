@@ -1,5 +1,5 @@
 .details-main {
-    max-width: 1000px;
+    max-width: 1100px; /* Aumenta a largura máxima */
     margin: 60px auto;
     padding: 20px;
 }
@@ -27,23 +27,23 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* LAYOUT REFEITO PARA EXCELÊNCIA VISUAL */
 .details-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 50px;
-    align-items: center;
+    grid-template-columns: 1.2fr 1fr; /* Coluna da imagem é maior */
+    gap: 60px; /* Aumenta o espaçamento */
+    align-items: flex-start;
 }
 
-.image-placeholder {
+.image-gallery {
     width: 100%;
-    height: 450px;
+    aspect-ratio: 1 / 1; /* Garante que a imagem seja sempre quadrada */
     background-color: var(--cinza-claro);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--grafite);
-    opacity: 0.5;
+    overflow: hidden; /* Garante que a imagem respeite as bordas */
 }
 
 .info {
@@ -67,6 +67,26 @@
     margin: 10px 0;
 }
 
+/* NOVO: Estilos para a informação de estoque na página de produto */
+.stock-display {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.stock-display.low {
+    background-color: rgba(217, 118, 91, 0.1); /* Fundo laranja suave */
+    color: var(--laranja-terroso);
+}
+
+.stock-display.in-stock {
+    background-color: rgba(0, 102, 60, 0.1); /* Fundo verde suave */
+    color: var(--verde-floresta);
+}
+
 .description {
     margin-bottom: 30px;
     line-height: 1.7;
@@ -75,7 +95,6 @@
     opacity: 0.8;
 }
 
-/* A CORREÇÃO SOLICITADA ESTÁ AQUI */
 .add-to-cart-button {
     background-color: var(--laranja-terroso);
     color: var(--branco);
@@ -87,15 +106,21 @@
     font-size: 1.1rem;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    /* Novas propriedades para alinhar o ícone e o texto */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px; /* Espaçamento entre o ícone e o texto */
+    gap: 12px;
 }
 
 .add-to-cart-button:hover {
     background-color: var(--verde-floresta);
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.add-to-cart-button:disabled {
+    background-color: var(--cinza-claro);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }

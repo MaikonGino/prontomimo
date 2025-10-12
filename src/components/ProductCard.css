@@ -24,6 +24,7 @@
     justify-content: center;
     color: var(--grafite);
     opacity: 0.5;
+    position: relative; /* Contexto para o stock-info */
 }
 
 .content {
@@ -59,10 +60,23 @@
     font-size: 1.5rem;
     font-weight: 800;
     color: var(--grafite);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-/* A CORREÇÃO ESTÁ AQUI */
+/* Reduzido margin-bottom */
+
+/* NOVO: Estilos para a informação de estoque */
+.stock-info {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    height: 20px; /* Garante que o layout não quebre se o texto sumir */
+}
+
+.low-stock {
+    color: var(--laranja-terroso);
+}
+
 .buy-button {
     background-color: var(--laranja-terroso);
     color: var(--branco);
@@ -76,15 +90,21 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    /* Novas propriedades para alinhar o ícone e o texto */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Espaçamento entre o ícone e o texto */
+    gap: 10px;
 }
 
 .buy-button:hover {
     background-color: var(--verde-floresta);
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.buy-button:disabled {
+    background-color: var(--cinza-claro);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }

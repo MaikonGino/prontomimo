@@ -1,0 +1,107 @@
+.dashboard-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.dashboard-title {
+    color: var(--azul-profundo);
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+.new-product-button {
+    padding: 12px 24px;
+    background-color: var(--verde-floresta);
+    color: var(--branco);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.new-product-button:hover {
+    background-color: var(--azul-profundo);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.products-table-container {
+    background-color: var(--branco);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.products-table th {
+    background-color: var(--cinza-claro);
+    padding: 18px;
+    text-align: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.products-table td {
+    padding: 18px;
+    border-bottom: 1px solid var(--cinza-claro);
+    vertical-align: middle;
+}
+
+/* Garante alinhamento vertical */
+
+/* NOVO: Estilo para a imagem de prévia na tabela */
+.product-preview-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.product-name {
+    font-weight: 700;
+    color: var(--grafite);
+}
+
+.action-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.action-links a, .action-links button {
+    font-weight: 700;
+    transition: transform 0.2s;
+}
+
+.action-links a:hover, .action-links button:hover {
+    transform: scale(1.1);
+}
+
+.edit-link {
+    color: var(--azul-profundo);
+}
+
+.delete-button {
+    color: var(--vermelho-alerta);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
