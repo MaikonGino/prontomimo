@@ -3,14 +3,17 @@
 import {useCart} from "@/context/CartContext";
 import Link from 'next/link';
 import Image from 'next/image';
+import {useRouter} from 'next/navigation'; // 1. Importa o hook de navegação
 import './Header.css';
 
 export default function Header() {
-    const {openCart, cartItems, openModal} = useCart();
+    const {openCart, cartItems} = useCart();
+    const router = useRouter(); // 2. Inicializa o hook
     const totalItems = cartItems.reduce((count, item) => count + item.quantity, 0);
 
+    // 3. A função agora usa o router para navegar para a página de login
     const handleUserClick = () => {
-        openModal('Área de Administração', 'Esta funcionalidade para gerenciar produtos e visualizar métricas está em desenvolvimento.');
+        router.push('/login');
     };
 
     return (

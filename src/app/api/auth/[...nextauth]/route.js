@@ -6,23 +6,21 @@ const handler = NextAuth({
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
-                username: {label: "Username", type: "text"},
-                password: {label: "Password", type: "password"}
+                username: {label: "Usuário", type: "text"},
+                password: {label: "Senha", type: "password"}
             },
             async authorize(credentials, req) {
                 // ATENÇÃO: Lógica de autenticação SIMPLES apenas para desenvolvimento.
                 // No futuro, isso deve ser trocado por um sistema de usuários no banco de dados.
-                if (credentials.username === "admin" && credentials.password === "mudar123") {
-                    // Retorna um objeto de usuário se as credenciais estiverem corretas.
-                    return {id: "1", name: "Admin", email: "admin@prontomimo.com"};
+                if (credentials.username === process.env.ADMIN_USERNAME && credentials.password === process.env.ADMIN_PASSWORD) {
+                    return {id: "1", name: "Admin"}; // Usuário autenticado
                 }
-                // Retorna null se as credenciais estiverem erradas.
-                return null;
+                return null; // Falha na autenticação
             }
         })
     ],
     pages: {
-        signIn: '/login', // Redireciona para uma página de login customizada que criaremos
+        signIn: '/login', // Redireciona para a página de login que criaremos
     }
 });
 

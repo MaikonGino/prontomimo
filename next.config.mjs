@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: [
-            "lh3.googleusercontent.com",
-            "avatars.githubusercontent.com",
-        ],
-    },
+    // O projeto agora é uma aplicação Next.js padrão,
+    // com otimização de imagem e renderização no servidor ativadas.
 };
 
 export default nextConfig;

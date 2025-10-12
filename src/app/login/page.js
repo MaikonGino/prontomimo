@@ -13,9 +13,8 @@ export default function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-
         const result = await signIn('credentials', {
-            redirect: false, // Não redireciona automaticamente
+            redirect: false,
             username,
             password,
         });
@@ -23,17 +22,31 @@ export default function LoginPage() {
         if (result.error) {
             setError('Credenciais inválidas. Tente novamente.');
         } else {
-            // Se o login for bem-sucedido, redireciona para o dashboard
             router.push('/admin/dashboard');
         }
     };
 
-    // ... (Aqui vai o JSX do formulário de login)
     return (
-        <div style={{maxWidth: '400px', margin: '100px auto'}}>
-            <h1>Área Restrita</h1>
-            <form onSubmit={handleSubmit}>
-                {/* ... campos de usuário, senha e botão ... */}
+        <div style={{maxWidth: '400px', margin: '100px auto', padding: '20px'}}>
+            <h1 style={{textAlign: 'center', color: 'var(--azul-profundo)'}}>Área Restrita</h1>
+            <form onSubmit={handleSubmit}
+                  style={{display: 'flex', flexDirection: 'column', gap: '15px', marginTop: '30px'}}>
+                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Usuário"
+                       required style={{padding: '15px', borderRadius: '8px', border: '1px solid var(--cinza-claro)'}}/>
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                       placeholder="Senha" required
+                       style={{padding: '15px', borderRadius: '8px', border: '1px solid var(--cinza-claro)'}}/>
+                {error && <p style={{color: 'var(--vermelho-alerta)'}}>{error}</p>}
+                <button type="submit" style={{
+                    padding: '15px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    backgroundColor: 'var(--azul-profundo)',
+                    color: 'var(--branco)',
+                    fontWeight: 'bold',
+                    cursor: 'pointer'
+                }}>Entrar
+                </button>
             </form>
         </div>
     );

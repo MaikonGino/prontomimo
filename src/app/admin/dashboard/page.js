@@ -2,36 +2,42 @@
 
 import {useSession, signOut} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
-import {useEffect, useState} from 'react';
-import Link from 'next/link';
+import {useEffect} from 'react';
 
 export default function DashboardPage() {
     const {data: session, status} = useSession();
     const router = useRouter();
-    const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        // Proteção: se o usuário não estiver logado, redireciona para o login.
+        // Proteção: se o usuário não estiver logado, redireciona para a página de login.
         if (status === 'unauthenticated') {
-            router.push('/login');
-        }
-        if (status === 'authenticated') {
-            // Busca os produtos da nossa API
-            fetch('/api/products').then(res => res.json()).then(data => {
-                setProducts(data.data);
-            });
+            router.replace('/login');
         }
     }, [status, router]);
 
     if (status === 'loading') {
-        return <p>Carregando...</p>;
+        return <p style={{textAlign: 'center', padding: '50px'}}>Carregando...</p>;
     }
 
-    // ... (Aqui vai o JSX que mostra a lista de produtos com botões de Editar/Deletar)
-    return (
-        <div>
-            <h1>Dashboard de Produtos</h1>
-            {/* ... Lista de produtos ... */}
-        </div>
-    );
+    if (status === 'authenticated') {
+        return (
+            <div style={{maxWidth: '800px', margin: '50px auto', padding: '20px'}}>
+                <h1 style={{color: 'var(--azul-profundo)'}}>Bem-vindo ao Dashboard, {session.user.name}!</h1>
+                <p style={{marginTop: '20px'}}>Esta é a sua área de administração. Em breve, você poderá gerenciar
+                    produtos, visualizar métricas de vendas e muito mais.</p>
+                <button onClick={() => signOut({callbackUrl: '/'})} style={{
+                    marginTop: '30px',
+                    padding: '10px 20px',
+                    border: 'none',
+                    backgroundColor: 'var(--vermelho-alerta)',
+                    color: 'var(--branco)',
+                    cursor: 'pointer'
+                }}>
+                    Sair
+                </button>
+            </div>
+        );
+    }
+
+    return null;
 }
