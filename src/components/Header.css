@@ -119,9 +119,4 @@
         height: 30px !important;
     }
 
-    .logout-button {
-        display: none;
-    }
-
-    /* Opcional: Esconde o texto "Sair" para economizar espaço */
-}
+   }

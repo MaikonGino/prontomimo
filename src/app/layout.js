@@ -23,7 +23,7 @@ export const metadata = {
     openGraph: {
         title: 'Pronto Mimo',
         description: 'A solução inteligente para presentes de última hora.',
-        images: [{url: '/logo-pronto-mimo.jpg', width: 1200, height: 630, alt: 'Logo da Pronto Mimo'}],
+        images: [{url: '/opengraph.png', width: 1200, height: 630, alt: 'Logo da Pronto Mimo'}],
     },
 };
 
