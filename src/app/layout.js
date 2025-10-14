@@ -1,4 +1,5 @@
 import {Poppins} from 'next/font/google';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import './globals.css';
 import {CartProvider} from '@/context/CartContext';
 import CartSidebar from '@/components/CartSidebar';
