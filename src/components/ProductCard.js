@@ -27,17 +27,14 @@ export default function ProductCard({product}) {
                     <p className="brand">{product.brand}</p>
                     <h2 className="name">{product.name}</h2>
                     <p className="price">R$ {product.price.toFixed(2)}</p>
-
-                    {/* Lógica para exibir o estoque */}
                     <p className={`stock-info ${product.stock > 0 && product.stock <= 5 ? 'low-stock' : ''}`}>
                         {isOutOfStock && "Esgotado"}
                         {product.stock > 0 && product.stock <= 5 && `Apenas ${product.stock} em estoque!`}
                     </p>
-
                     <button
                         className="buy-button"
                         onClick={handleAddToCart}
-                        disabled={isOutOfStock} // Desativa o botão se o estoque for 0
+                        disabled={isOutOfStock}
                     >
                         {isOutOfStock ? 'Esgotado' : (
                             <>

@@ -1,0 +1,61 @@
+.hero-admin-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.hero-admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.hero-admin-title {
+    color: var(--azul-profundo);
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+.slide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.slide-card {
+    background-color: var(--branco);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.slide-preview {
+    width: 150px;
+    height: 75px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background-color: var(--cinza-claro);
+}
+
+.slide-info {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.slide-url {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.slide-actions {
+    display: flex;
+    gap: 15px;
+}

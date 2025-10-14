@@ -61,13 +61,16 @@ export default function DashboardPage() {
         <div className="dashboard-container">
             <div className="dashboard-header">
                 <h1 className="dashboard-title">Dashboard</h1>
-                <Link href="/admin/products/new" className="new-product-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2}
-                         stroke="currentColor" style={{width: 20, height: 20}}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                    </svg>
-                    Novo Produto
-                </Link>
+                {/* GRUPO DE BOTÕES DE AÇÃO */}
+                <div style={{display: 'flex', gap: '15px'}}>
+                    <Link href="/admin/hero" className="new-product-button"
+                          style={{backgroundColor: 'var(--azul-profundo)'}}>
+                        Gerenciar Carrossel
+                    </Link>
+                    <Link href="/admin/products/new" className="new-product-button">
+                        + Novo Produto
+                    </Link>
+                </div>
             </div>
 
             {/* Layout de Tabela para Desktop */}

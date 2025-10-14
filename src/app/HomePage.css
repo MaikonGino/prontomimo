@@ -1,6 +1,6 @@
 .hero {
-    background-color: var(--azul-profundo); /* CORRIGIDO: Fundo escuro */
-    color: var(--branco); /* CORRIGIDO: Texto claro para alto contraste */
+    background-color: var(--azul-profundo);
+    color: var(--branco);
     text-align: center;
     padding: 80px 20px;
 }

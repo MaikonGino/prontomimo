@@ -1,17 +1,22 @@
-import {getAllProducts} from '@/lib/productService';
 import ProductList from '@/components/ProductList';
-import './HomePage.css'; // Importa o novo CSS
+import {getAllProducts} from '@/lib/productService';
+import HeroCarousel from '@/components/HeroCarousel';
+import './HomePage.css';
 
 export default async function HomePage() {
-    const products = await getAllProducts();
+    let products = await getAllProducts();
+
+    products.sort((a, b) => {
+        if (a.stock > 0 && b.stock === 0) return -1;
+        if (a.stock === 0 && b.stock > 0) return 1;
+        return 0;
+    });
 
     return (
         <div>
-            <section className="hero">
-                <h1 className="hero-title">O presente perfeito, agora.</h1>
-                <p className="hero-subtitle">Soluções inteligentes e entrega rápida para você surpreender em Araras e
-                    Americana.</p>
-            </section>
+            {/* O componente estático de texto foi substituído pelo carrossel dinâmico */}
+            <HeroCarousel/>
+
             <section className="products-section">
                 <h2 className="section-title">Destaques para você</h2>
                 {products.length === 0 ? (

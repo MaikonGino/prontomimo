@@ -27,9 +27,23 @@ export function CartProvider({children}) {
         setTimeout(() => setModalContent({title: '', message: '', type: 'info', onConfirm: null}), 300);
     };
 
+    // --- LÓGICA DE CONTROLE DE ESTOQUE IMPLEMENTADA AQUI ---
     const addToCart = (product) => {
+        // Procura se o item já existe no carrinho
+        const existingItem = cartItems.find(item => item._id === product._id);
+        const currentQuantityInCart = existingItem ? existingItem.quantity : 0;
+
+        // Verifica se adicionar mais um item excederá o estoque
+        if (currentQuantityInCart >= product.stock) {
+            openModal(
+                'Limite de Estoque',
+                `Você já atingiu a quantidade máxima em estoque para "${product.name}".`,
+                'error'
+            );
+            return; // Interrompe a função
+        }
+
         setCartItems(prevItems => {
-            const existingItem = prevItems.find(item => item._id === product._id);
             if (existingItem) {
                 return prevItems.map(item =>
                     item._id === product._id ? {...item, quantity: item.quantity + 1} : item
@@ -41,11 +55,24 @@ export function CartProvider({children}) {
     };
 
     const increaseQuantity = (productId) => {
-        setCartItems(prevItems => prevItems.map(item =>
-            item._id === productId ? {...item, quantity: item.quantity + 1} : item
-        ));
+        const itemToIncrease = cartItems.find(item => item._id === productId);
+
+        // Verifica se o item existe e se a quantidade atual é menor que o estoque
+        if (itemToIncrease && itemToIncrease.quantity < itemToIncrease.stock) {
+            setCartItems(prevItems => prevItems.map(item =>
+                item._id === productId ? {...item, quantity: item.quantity + 1} : item
+            ));
+        } else if (itemToIncrease) {
+            // Se o limite foi atingido, informa o usuário
+            openModal(
+                'Limite de Estoque',
+                `A quantidade máxima em estoque para "${itemToIncrease.name}" é ${itemToIncrease.stock}.`,
+                'error'
+            );
+        }
     };
 
+    // Funções 'removeFromCart' e 'decreaseQuantity' sem alterações de lógica
     const removeFromCart = (productId) => {
         setCartItems(prevItems => prevItems.filter(item => item._id !== productId));
     };
@@ -69,14 +96,12 @@ export function CartProvider({children}) {
         }
     };
 
-    // 1. Calcula o subtotal a partir dos itens do carrinho.
     const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const value = {
-        cartItems, addToCart, isCartOpen, openCart, closeCart,
+        cartItems, addToCart, isCartOpen, openCart, closeCart, subtotal,
         increaseQuantity, decreaseQuantity, removeFromCart,
         isModalOpen, modalContent, openModal, closeModal,
-        subtotal, // 2. Garante que o subtotal está sendo compartilhado com o resto da aplicação.
     };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

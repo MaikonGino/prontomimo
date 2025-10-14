@@ -1,0 +1,21 @@
+.products-grid {
+    display: grid;
+    gap: 20px; /* Espaçamento para as telas menores */
+    grid-template-columns: 1fr; /* Padrão: UMA coluna */
+}
+
+/* Em telas com largura MÍNIMA de 480px, aplica a regra de DUAS colunas. */
+@media (min-width: 480px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+}
+
+/* Em telas de tablet e desktop, a grade se expande para mais colunas */
+@media (min-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 40px;
+    }
+}
